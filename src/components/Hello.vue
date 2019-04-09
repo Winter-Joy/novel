@@ -1,15 +1,18 @@
 <template>
   <div class="mainpart">
-    <button v-on:click="prev">last</button>
-    <button v-on:click="next">next</button>
-    <div v-for="value in album">
-      <span v-if="value.status">{{value.ig}}{{value.status}}</span>
-      <img v-bind:src="value.url" v-if="value.status" class="slide-img">
+    <div class="slide-container">
+      <div v-for="value in album">
+        <!-- <span v-if="value.status">{{value.ig}}{{value.status}}</span> -->
+        <img v-bind:src="value.url" v-if="value.status" class="slide-img">
+      </div>
+      <button v-on:click="prev" class="slide-prev">last</button>
+      <button v-on:click="next" class="slide-next">next</button>
     </div>
     
   </div>
 </template>
 <script>
+import { setInterval } from 'timers';
 export default {
   // eslint-disable-next-line
   name: "Hello",
@@ -35,25 +38,31 @@ export default {
       ],
     };
   },
+  created(){
+    let _this = this;
+      setInterval(function(){
+        _this.next();
+      },2000);
+  },
   methods: {
     prev(){
-      var i = this.img -1;
-      if(i<0){
+      var i = this.img - 1;
+      if(i < 0){
         i = this.album.length - 1; 
       }
-      console.log(i);
-      this.album[i] = true;
-      this.album[this.img].status = false;
+      var j = this.img;
+      this.album[i].status = true;
+      this.album[j].status = false;
       this.img = i;
     },
     next(){
       var i = this.img + 1;
-      console.log(i);
       if(i>this.album.length-1){
         i = 0; 
       }
+      var j = this.img;
       this.album[i].status = true;
-      this.album[this.img].status = false;
+      this.album[j].status = false;
       this.img = i;
     }
   },
@@ -65,7 +74,20 @@ export default {
       return this.books.length;
     }
   }
+  
 };
+function slide(img,album){
+  setInterval(function(){
+    var i = img + 1;
+        if(i>album.length-1){
+          i = 0; 
+        }
+        var j = img;
+        album[i].status = true;
+        album[j].status = false;
+        img = i;
+  },2000)
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
