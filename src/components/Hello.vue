@@ -18,6 +18,7 @@ export default {
   name: "Hello",
   data() {
     return {
+      timer:null,
       img:0,
       album: [
         {
@@ -40,7 +41,7 @@ export default {
   },
   created(){
     let _this = this;
-      setInterval(function(){
+      this.timer = setInterval(function(){
         _this.next();
       },2000);
   },
@@ -64,6 +65,15 @@ export default {
       this.album[i].status = true;
       this.album[j].status = false;
       this.img = i;
+    }
+  },
+  watch:{
+    img(before,after){
+      clearInterval(this.timer._id);
+      let _this = this;
+      this.timer = setInterval(function(){
+        _this.next();
+      },2000);
     }
   },
   computed: {

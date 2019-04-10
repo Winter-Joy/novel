@@ -1,11 +1,13 @@
 <template>
   <div id="app">
+    <div id="mask-cover"></div>
+    <div id="mask-cover-content"></div>
     <div class="main">
       <nav class="top-nav" v-bind:class="active" v-on:click.prevent>
         <span>{{title}}</span>
         <div class="inline content-nav">
-          <a href="#" class="home" v-on:click="makeActive('home')">Home{{count}}</a>
-          <a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a>
+          <router-link  to="/" ><a href="#" class="home" v-on:click="makeActive('home')">Home</a></router-link>
+          <router-link  to="/hello" ><a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a></router-link>
           <a href="#" class="services" v-on:click="makeActive('services')">Services</a>
           <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>
         </div>
