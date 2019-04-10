@@ -12,7 +12,8 @@
           <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>
         </div>
       </nav>
-      <router-view/>
+      <div class="router-container"><router-view/></div>
+      
     </div>
     <div class="footer">{{msg}}</div>
   </div>
@@ -25,7 +26,7 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       active: "home",
-      title: "测试用例"
+      title: "Vue"
     };
   },
   methods: {
@@ -71,6 +72,11 @@ body {
   width: 100%;
   min-height: 50em;
   background-color: rgba(248, 245, 245, 0.986);
+  margin: 0 auto;
+}
+.router-container{
+  width:70%;
+  margin:0 auto;
 }
 .top-nav {
   width: 100%;

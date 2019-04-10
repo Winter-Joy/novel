@@ -8,58 +8,77 @@
       <button v-on:click="prev" class="slide-prev">last</button>
       <button v-on:click="next" class="slide-next">next</button>
     </div>
-    
+    <!-- novel list -->
+    <div class="booklist">
+      <div class="book" v-for="book in books">
+        <img v-bind:src="book.cover">
+        <div class="book-title">{{book.title}}</div>
+        <div class="book-info">{{book.info}}</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { setInterval } from 'timers';
+import { setInterval } from "timers";
 export default {
   // eslint-disable-next-line
   name: "Hello",
   data() {
     return {
-      timer:null,
-      img:0,
+      timer: null,//计时器id
+      img: 0,//显示的图片索引
       album: [
         {
-          url:require('../assets/logo.png'),
-          status:true,
-          ig:0,
+          url: require("../assets/logo.png"),
+          status: true,
+          ig: 0
         },
         {
-          'url':require('./../assets/test.png'),
-          status:false,
-          ig:1,
+          url: require("./../assets/test.png"),
+          status: false,
+          ig: 1
         },
         {
-          'url':require('./../assets/logo.png'),
-          status:false,
-          ig:2
+          url: require("./../assets/logo.png"),
+          status: false,
+          ig: 2
+        }
+      ],
+      books:[
+        {
+          title:"test",
+          cover:require("./../assets/test.png"),
+          info:"info"
         },
+        {
+          title:"test",
+          cover:require("./../assets/test.png"),
+          info:"info"
+        }
       ],
     };
   },
-  created(){
+  created() {
     let _this = this;
-      this.timer = setInterval(function(){
-        _this.next();
-      },2000);
+    this.timer = setInterval(function() {
+      _this.next();
+    }, 2000);
   },
   methods: {
-    prev(){
+    prev() {//轮播图上一页
       var i = this.img - 1;
-      if(i < 0){
-        i = this.album.length - 1; 
+      if (i < 0) {
+        i = this.album.length - 1;
       }
       var j = this.img;
       this.album[i].status = true;
       this.album[j].status = false;
       this.img = i;
     },
-    next(){
+    next() {//轮播图下一页
       var i = this.img + 1;
-      if(i>this.album.length-1){
-        i = 0; 
+      if (i > this.album.length - 1) {
+        i = 0;
       }
       var j = this.img;
       this.album[i].status = true;
@@ -67,13 +86,13 @@ export default {
       this.img = i;
     }
   },
-  watch:{
-    img(before,after){
+  watch: {
+    img(before, after) {
       clearInterval(this.timer._id);
       let _this = this;
-      this.timer = setInterval(function(){
+      this.timer = setInterval(function() {
         _this.next();
-      },2000);
+      }, 2000);
     }
   },
   computed: {
@@ -84,37 +103,11 @@ export default {
       return this.books.length;
     }
   }
-  
 };
-function slide(img,album){
-  setInterval(function(){
-    var i = img + 1;
-        if(i>album.length-1){
-          i = 0; 
-        }
-        var j = img;
-        album[i].status = true;
-        album[j].status = false;
-        img = i;
-  },2000)
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.mainpart {
-  width: 1200px;
-  height: 300px;
-  margin: 50px auto;
-  padding: 50px 20px;
-  background-color: rgba(255, 255, 255);
-}
-.bookcase {
-  display: inline;
-}
-.slide-img{
-  width:100%;
-  min-height:300px;
-  max-height: 300px
-}
+@import "./../assets/css/hello.css";
+/* @import './../assets/css/iconfont.css'; */
 </style>
