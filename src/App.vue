@@ -39,7 +39,13 @@ export default {
     count() {
       return this.$store.state.count;
     }
+  },
+  watch:{
+    '$router'(to,from){
+      console.log(from);
+    }
   }
+
 };
 </script>
 

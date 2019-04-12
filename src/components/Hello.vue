@@ -1,9 +1,10 @@
 <template>
-  <div class="mainpart">
+  <div class="mainpart" id="mainpart">
+    <!-- <mycomponent></mycomponent> -->
     <div class="slide-container">
       <div v-for="value in album">
         <!-- <span v-if="value.status">{{value.ig}}{{value.status}}</span> -->
-        <img v-bind:src="value.url" v-if="value.status" class="slide-img">
+        <img v-bind:src="value.url" v-if="value.status" class="slide-img" >
       </div>
       <button v-on:click="prev" class="slide-prev">last</button>
       <button v-on:click="next" class="slide-next">next</button>
@@ -19,7 +20,7 @@
   </div>
 </template>
 <script>
-import { setInterval } from "timers";
+
 export default {
   // eslint-disable-next-line
   name: "Hello",
@@ -27,6 +28,7 @@ export default {
     return {
       timer: null,//计时器id
       img: 0,//显示的图片索引
+      isSelect:this.isSelect = this.$route.name,
       album: [
         {
           url: require("../assets/logo.png"),
@@ -88,7 +90,7 @@ export default {
   },
   watch: {
     img(before, after) {
-      clearInterval(this.timer._id);
+      clearInterval(this.timer);
       let _this = this;
       this.timer = setInterval(function() {
         _this.next();
@@ -101,6 +103,11 @@ export default {
     },
     num: function() {
       return this.books.length;
+    }
+  },
+  watch:{
+    '$router'(to,from){
+      console.log(from);
     }
   }
 };
