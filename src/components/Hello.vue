@@ -1,10 +1,14 @@
 <template>
   <div class="mainpart" id="mainpart">
+      <mycomponent v-if="aler" v-bind:name="test"></mycomponent>
+    
     <!-- <mycomponent></mycomponent> -->
     <div class="slide-container">
       <div v-for="value in album">
         <!-- <span v-if="value.status">{{value.ig}}{{value.status}}</span> -->
+        <!-- <transition name="fade"> -->
         <img v-bind:src="value.url" v-if="value.status" class="slide-img" >
+        <!-- </transition> -->
       </div>
       <button v-on:click="prev" class="slide-prev">last</button>
       <button v-on:click="next" class="slide-next">next</button>
@@ -26,6 +30,8 @@ export default {
   name: "Hello",
   data() {
     return {
+      test:3333,
+      aler:true,
       timer: null,//计时器id
       img: 0,//显示的图片索引
       isSelect:this.isSelect = this.$route.name,
@@ -109,7 +115,12 @@ export default {
     '$router'(to,from){
       console.log(from);
     }
-  }
+  },
+  components: {
+      'my-compo': {
+        template: `<div>这是一个局部的自定义组件，只能在当前Vue实例中使用</div>`
+      }
+    }
 };
 </script>
 

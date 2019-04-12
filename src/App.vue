@@ -6,8 +6,8 @@
       <nav class="top-nav" v-bind:class="active" v-on:click.prevent>
         <span>{{title}}</span>
         <div class="inline content-nav">
-          <router-link  to="/" ><a href="#" class="home" v-on:click="makeActive('home')">Home</a></router-link>
-          <router-link  to="/hello" ><a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a></router-link>
+          <router-link  to="/hello" ><a href="#" class="hello" v-on:click="makeActive('hello')">Home</a></router-link>
+          <router-link  to="/world" ><a href="#" class="world" v-on:click="makeActive('/world')">Projects</a></router-link>
           <a href="#" class="services" v-on:click="makeActive('services')">Services</a>
           <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>
         </div>
@@ -24,8 +24,8 @@ export default {
   name: "App",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      active: "home",
+      msg: "Welcome to Yur Vue.js App",
+      active: "hello",
       title: "Vue"
     };
   },
@@ -41,9 +41,16 @@ export default {
     }
   },
   watch:{
-    '$router'(to,from){
-      console.log(from);
+    '$route.path':{
+      handler: function (val, oldVal) {
+        let path = val.substr(1)
+        console.log(path);
+        this.makeActive(path);
+      }
     }
+  },
+  components:{
+    'app-com':`<span>全局组件<span>`
   }
 
 };
@@ -129,7 +136,6 @@ nav a {
   line-height: 1;
   text-transform: uppercase;
   background-color: transparent;
-
   -webkit-transition: background-color 0.25s;
   -moz-transition: background-color 0.25s;
   transition: background-color 0.25s;
@@ -142,9 +148,8 @@ nav a:first-child {
 nav a:last-child {
   border-radius: 0 2px 2px 0;
 }
-
-nav.home .home,
-nav.projects .projects,
+nav.hello .hello,
+nav.world .world,
 nav.services .services,
 nav.contact .contact {
   background-color: #e35885;
